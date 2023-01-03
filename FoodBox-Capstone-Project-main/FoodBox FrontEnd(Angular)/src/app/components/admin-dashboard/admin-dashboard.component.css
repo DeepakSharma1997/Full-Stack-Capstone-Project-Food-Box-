@@ -1,0 +1,56 @@
+.logo{
+    position:relative;
+    top: 8px;
+    height: 40px;
+    width: 52px;
+    cursor: pointer;
+}
+.header-title{
+    position: relative;
+    top: 8px;
+    left:25px;
+    font-family: 'WindSong', cursive;
+    font-size: 32px;
+    color: #bf1e2e;
+}
+.bthHead{
+    margin-left: 10px;
+}
+
+.active, .bthHead:hover{
+    color: #bf1e2e;
+}
+
+hr{
+    margin: 0;
+}
+.prodLogo{
+    position: relative;
+    top: 20px;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.AddProd{
+    margin: 10px;
+}
+
+.makeCenter{
+    text-align: center;
+}
+
+.form-check-input{
+    margin-top: 3px;
+}
+
+p{
+    color: red;
+}
+
+.modal-title{
+    font-size: 18px;
+}
+
+th{
+    text-align: center;
+}

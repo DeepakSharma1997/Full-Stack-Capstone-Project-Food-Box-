@@ -1,0 +1,137 @@
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div>
+            <img routerLink="/products" class="logo" src="./assets/images/logofoodbox.jpg" alt="">
+            <strong class="header-title">The Foodbox</strong>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <button class="btn bthHead active"><i class="fas fa-tasks fa-lg"></i> Manage Products</button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn bthHead" routerLink="/manageCustomer"><i class="fas fa-users fa-lg"></i> Manage Users</button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn bthHead" routerLink="/managePurchase"><i class="fas fa-shopping-basket fa-lg"></i> Manage Purchases</button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn bthHead float-right" (click)="adminLogout()">Logout</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <hr>
+</div>
+<div>
+    <div class="container">
+        <span class="text-center prodLogo">Product List</span>
+        <button type="button" (click)="clickAddProduct()" data-toggle="modal" data-target="#exampleModal"
+            class="btn btn-primary float-right AddProd">Add Product</button>
+    </div>
+    <table class="table table-striped" matSort (matSortChange)="sortData($event)">
+        <thead>
+            <tr>
+                <th style="width: 17%;" mat-sort-header="name">Name <i class="fas fa-sort"></i></th>
+                <th style="width: 20%;">Description</th>
+                <th mat-sort-header="category">Category <i class="fas fa-sort"></i></th>
+                <th mat-sort-header="actualPrice">Price <i class="fas fa-sort"></i></th>
+                <th mat-sort-header="discount">Discount <i class="fas fa-sort"></i></th>
+                <th mat-sort-header="price">Final price <i class="fas fa-sort"></i></th>
+                <th mat-sort-header="avail">Availabilty <i class="fas fa-sort"></i></th>
+                <th style="width: 18%;">ImagePath</th>
+                <th style="width:15%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of sortedProd">
+                <td>{{product.name}}</td>
+                <td>{{product.desc}}</td>
+                <td class="makeCenter">{{product.category}}</td>
+                <td class="makeCenter">₹{{product.actualPrice}}</td>
+                <td class="makeCenter">{{product.discount}}%</td>
+                <td class="makeCenter">₹{{product.price}}</td>
+                <td class="makeCenter"><i *ngIf="product.avail=='no'" class="fas fa-times"></i>
+                    <i *ngIf="product.avail=='yes'" class="fas fa-check"></i>
+                </td>
+                <td>{{product.imagepath}}</td>
+                <td>
+                    <button (click)="onEdit(product)" type="button" data-toggle="modal" data-target="#exampleModal"
+                        class="btn btn-sm btn-primary">Update</button>
+                    <button (click)="deleteProduct(product)" class="btn btn-sm btn-danger" style="margin-left:3px;">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!--Add Employee Modal -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title float-left" id="exampleModalLabel">Product Details</span>
+                <button type="button" class="close float-right" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <p *ngIf="message!=''">{{message}}</p>
+            <div class="modal-body">
+                <form [formGroup]="formValue">
+                    <div class="form-group">
+                        <label for="name" class="col-form-label">Name</label>
+                        <input type="text" formControlName="name" class="form-control" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="desc" class="col-form-label">Description</label>
+                        <input type="text" formControlName="desc" class="form-control" id="desc" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="categery" class="col-form-label">Category</label>
+                        <select type="text" name="category" formControlName="category" class="form-control"
+                            id="category" required>
+                            <option value="Chinese">Chinese</option>
+                            <option value="Indian">Indian</option>
+                            <option value="Mexican">Mexican</option>
+                            <option value="Italian">Italian</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="actualPrice" class="col-form-label">Price</label>
+                        <input type="text" formControlName="actualPrice" class="form-control" id="actualPrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="discount" class="col-form-label">Discount</label>
+                        <input type="text" formControlName="discount" class="form-control" id="discount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="avail" class="form-check-label">Availabilty</label>
+                        <div class="form-check">
+                            <input type="radio" value="yes" formControlName="avail" name="avail"
+                                class="form-check-input" id="yes">
+                            <label class="form-check-label" for="avail">
+                                Yes
+                            </label>
+                            <input style="margin-left: 30px;" type="radio" value="no" formControlName="avail" name="avail" class="form-check-input"
+                                id="no">
+                            <label style="margin-left:48px;" class="form-check-label" for="avail">
+                                No
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="imagepath" class="col-form-label">Image Link</label>
+                        <input type="text" formControlName="imagepath" class="form-control" id="imagepath" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <p *ngIf="message!=''" class="text-left">{{message}}</p>
+                <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" *ngIf="showAdd" (click)="addProduct()" class="btn btn-primary">Add</button>
+                <button type="button" *ngIf="showUpdate" (click)="updateProduct()"
+                    class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </div>
+</div>

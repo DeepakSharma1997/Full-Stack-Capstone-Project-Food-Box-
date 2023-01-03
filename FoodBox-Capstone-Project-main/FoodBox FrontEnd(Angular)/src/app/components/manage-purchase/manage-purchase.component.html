@@ -1,0 +1,62 @@
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div>
+            <img routerLink="/products" class="logo" src="./assets/images/logofoodbox.jpg" alt="">
+            <strong class="header-title">The Foodbox</strong>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <button class="btn btnHead" routerLink="/adminDashboard"><i class="fas fa-tasks fa-lg"></i> Manage
+                        Products</button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btnHead" routerLink="/manageCustomer"><i class="fas fa-users fa-lg"></i> Manage
+                        Users</button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btnHead active" routerLink="/managePurchase"><i
+                            class="fas fa-shopping-basket fa-lg"></i> Manage Purchases</button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btnHead float-right" (click)="adminLogout()">Logout</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <hr>
+</div>
+<div>
+    <div class="container">
+        <span class="text-center prodLogo">Users List</span>
+        <input type="text" class="float-right form-control" [(ngModel)]="keyword"
+        (ngModelChange)="searchPurchase()" name="searchKey" id="searchKey"
+            placeholder="Search Purchase">
+    </div>
+    <div class="container">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Transaction Id</th>
+                    <th>Date of Purchase</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Total Cost</th>
+                    <th>Customer Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of allPurchase">
+                    <td>{{item.transactionid}}</td>
+                    <td>{{item.dop}}</td>
+                    <td>{{item.productname}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.totalcost}}</td>
+                    <td>{{item.customer.email}}</td>
+                    <td><button (click)="deletePurchase(item.id)" class="btn btn-sm btn-danger">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

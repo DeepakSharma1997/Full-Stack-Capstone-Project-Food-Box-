@@ -1,0 +1,54 @@
+.card-top{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background: #fff;
+    background-clip: border-box;
+    border-radius: .25rem;
+    border:1px solid rgba(0, 0, 0, 0.2)
+}
+
+.card{
+    padding: 20px;
+    margin: 15px auto;
+}
+.navSec a:hover{
+   color: #bf1e2e;
+    cursor: pointer;
+}
+.card img{
+    width: 250px;
+    height:200px;
+    margin-bottom:15px;
+    transition: 0.3s ease-in-out;
+}
+
+.card img:hover{
+    transition: 0.3s ease-in-out;
+    transform: scale(1.1);
+}
+
+.form-control{
+    border-radius: 3px;
+    width: 350px;
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+.carousel-item {
+    height:300px;
+    min-height: 350px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover
+}
+
+/* .addcart{
+    position: absolute;
+    bottom: 5px;
+    display: table;
+} */

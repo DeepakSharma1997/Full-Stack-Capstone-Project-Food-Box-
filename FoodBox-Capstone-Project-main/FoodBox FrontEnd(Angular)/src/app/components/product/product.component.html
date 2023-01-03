@@ -1,0 +1,69 @@
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-interval="3000" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="d-block w-100" src="./assets/images/CCar.jpg" alt="First slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="./assets/images/ICar.jpg" alt="Second slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="./assets/images/InCar.jpg" alt="Third slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="./assets/images/mCar.jpg" alt="Fourth slide">
+        </div>
+    </div>
+</div>
+<div class="card-top container-fluid">
+    <div class="container d-flex">
+        <div class="container d-flex">
+            <nav class="navbar navbar-expand-lg navbar-light col-md-7">
+                <div class="navSec">
+                    <a (click)="getProducts()" id="allProducts" class="navbar-brand">All Products</a>
+                </div>
+                <div class="navSec">
+                    <a (click)="categoryChinese()" id="chinese" class="navbar-brand">Chinese</a>
+                </div>
+                <div class="navSec">
+                    <a (click)="categoryIndian()" id="indian" class="navbar-brand">Indian</a>
+                </div>
+                <div class="navSec">
+                    <a (click)="categoryMexican()" class="navbar-brand">Mexican</a>
+                </div>
+                <div class="navSec">
+                    <a (click)="categoryItalian()" class="navbar-brand">Italian</a>
+                </div>
+            </nav>
+
+            <div class="form-group col-md-3">
+                <input type="text" class="form-control" name="searchKey" [(ngModel)]="searchKey"
+                    (ngModelChange)="Search()" placeholder="Search Product">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <ng-container *ngFor="let item of products">
+            <div class="card col-md-3 flex-column d-flex">
+                <img src="{{item.imagepath}}" alt="">
+                <h2>{{item.name}} </h2>
+                <p>{{item.desc}}</p>
+                <p><strong>Price: </strong>₹{{item.actualPrice}}
+                    <span *ngIf="item.discount>0" style="color: red;">({{item.discount}}% Discount)</span>
+                </p>
+                <div *ngIf="item.discount>0">
+                    <p><strong>After Discount Price: </strong>₹{{item.price}}</p>
+                </div>
+                <div *ngIf="item.discount==0">
+                    <p></p>
+                    <br>
+                </div>
+                <button *ngIf="login==0" class="align-self-end mt-auto btn addcart btn-primary"
+                    (click)="showToLogin()">Add to Cart</button>
+                <button *ngIf="login==1" class="align-self-end mt-auto btn addcart btn-primary"
+                    (click)="addToCart(item)" id="addToCart">Add to Cart</button>
+            </div>
+        </ng-container>
+    </div>
+</div>

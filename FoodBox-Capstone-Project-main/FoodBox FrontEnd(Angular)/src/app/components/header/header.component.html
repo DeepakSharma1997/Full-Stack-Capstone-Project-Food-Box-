@@ -1,0 +1,158 @@
+<header *ngIf="showHeader==1">
+    <div class="navbar shadow-sm">
+        <div class="container">
+            <div class="navbar-brand align-item-center d-flex">
+                <div>
+                    <img routerLink="/products" class="logo" src="./assets/images/logofoodbox.jpg" alt="">
+                </div>
+                <strong class="header-title">FoodBox-Delicious Food</strong>
+            </div>
+            <div *ngIf="login==0" class="text-right">
+                <button class="btn btnMain" type="button" data-toggle="modal" data-target="#loginModal" id="custLogin">Login</button>
+                <button class="btn btnMain" type="button" data-toggle="modal" data-target="#registerModal" id="custRegister">Register</button>
+            </div>
+            <div *ngIf="login==1" class="text-right">
+                <button class="btn btnMain" (click)="getActiveOrders()" type="button" data-toggle="modal" data-target="#activeOrders">Previous Orders</button>
+                <button class="btn btnMain" (click)="CustomerLogout()">Logout</button>
+            </div>
+        </div>
+
+        <button *ngIf="login==1" routerLink="cart" class="btn cart">
+            <i style="font-size: 50px;color:#372861;" class="fas fa-cart-plus"></i>
+        </button>
+    </div>
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+                    <button type="button" class="close" id="Lcancel" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                <p *ngIf="message!= ''">{{message}}</p>
+                <form (ngSubmit)="loginSubmit()">
+                    <div class="modal-body mx-3">
+                        <div class="md-form mb-3">
+                            <i class="fas fa-envelope prefix grey-text"></i>
+                            <input [(ngModel)]="loginData.email" name="email" type="email" id="defaultForm-email"
+                                class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
+                        </div>
+
+                        <div class="md-form mb-3">
+                            <i class="fas fa-lock prefix grey-text"></i>
+                            <input [(ngModel)]="loginData.password" name="password" type="password"
+                                id="defaultForm-pass" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="submit" id="loginSubmit" class="btn btn-default">Login</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
+                    <p *ngIf="message!= ''">{{message}}</p>
+                    <button type="button" class="close" id="Rcancel" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form [formGroup]="formValue">
+                    <div class="modal-body mx-3">
+                        <div class="md-form form-group mb-2">
+                            <i class="fas fa-envelope prefix grey-text"> Email Id</i>
+                            <input type="email" formControlName="email" id="orangeForm-Remail"
+                                class="form-control validate">
+
+                        </div>
+                        <div class="md-form form-group mb-2">
+                            <i class="fas fa-lock prefix grey-text"> Password</i>
+                            <input type="password" formControlName="password" id="orangeForm-Rpass"
+                                class="form-control validate">
+
+                        </div>
+                        <div class="md-form form-group mb-2">
+                            <i class="fas fa-user prefix grey-text"> Full Name</i>
+                            <input type="text" formControlName="name" id="orangeForm-name"
+                                class="form-control validate">
+
+                        </div>
+                        <div class="md-form form-group mb-2">
+                            <i class="fas fa-user prefix grey-text"> Contact Number</i>
+                            <input type="text" formControlName="contact" id="orangeForm-contact"
+                                class="form-control validate">
+                        </div>
+                        <div class="md-form form-group mb-2">
+                            <i class="fas fa-user prefix grey-text"> Address</i>
+                            <input type="text" formControlName="address" id="orangeForm-address"
+                                class="form-control validate">
+
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-deep-orange" (click)=addCustomer()>Register</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="activeOrders">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Previous Orders</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div *ngIf="activeOrders.length!=0">
+                        <table class="table">
+                            <thead class="thead-#bf1e2e">
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Cost</th>
+                                    <th>Purchase Data</th>
+                                    <th>Transaction Id</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let pur of activeOrders">
+                                    <td>{{pur.productname}}</td>
+                                    <td>{{pur.quantity}}</td>
+                                    <td>{{pur.totalcost}}</td>
+                                    <td>{{pur.dop}}</td>
+                                    <td>{{pur.transactionid}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div *ngIf="activeOrders.length==0">
+                        <h5 class="text-center text-danger">No Previous orders</h5>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>
